@@ -100,3 +100,12 @@ span.box-title {
 span.box-closer {
     float: right;
 }
+
+/* Make actions more obvious */
+.action {
+    cursor: pointer;
+    color: blue;
+}
+.action:hover {
+    text-decoration: underline;
+}
