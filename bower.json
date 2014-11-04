@@ -1,0 +1,16 @@
+{
+  "name": "klarna-assignment",
+  "version": "0.0.0",
+  "authors": [
+    "Bryan Richter <b@chreekat.net>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
