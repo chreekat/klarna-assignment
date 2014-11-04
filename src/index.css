@@ -13,13 +13,14 @@ div.container1 {
     max-width: 960px;
     margin: auto;
     /* Leave space for border. Same below. */
-    padding: 10px;
+    border: 10px solid white;
+    padding: 20px 0px;
 }
 div.container2 {
     background-color: #F0F0F0;
     max-width: 860px;
     margin: auto;
-    padding: 15px;
+    border: 15px solid white;
 }
 div.util {
     max-width: 960px;
@@ -72,11 +73,9 @@ div.box:nth-child(4n+4):last-child {
 /* Put border on highlighted boxes/containers (interactively)*/
 div.container1.border {
     border: 10px #404040 solid;
-    padding: 0;
 }
 div.container2.border {
     border: 15px #404040 solid;
-    padding: 0;
 }
 div.box:hover {
     border: 5px #404040 solid;
