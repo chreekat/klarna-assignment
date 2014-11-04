@@ -80,7 +80,7 @@ app.controller("BoxList", function ($scope, webStorage) {
         }
         return "";
     };
-    $scope.borderColor = function () {
+    $scope.bgColor = function () {
         // At one end, we have absolute black. Let's make that happen at 20
         // boxes, so we can take steps of 6, starting at 135
         val = Math.max(0, 135 - 6* $scope.m.boxes.length);
