@@ -15,25 +15,24 @@ indexOf = function(listish, obj) {
     return -1;
 }
 
-setContainerBg = function (doSet) {
+setContainerBorder = function (doSet) {
     map(
         document.querySelectorAll("div.container1, div.container2"),
-        function (cont) { cont.classList.toggle("background", doSet); }
+        function (cont) { cont.classList.toggle("border", doSet); }
     );
 };
 
 isBox = function (node) {
-    return indexOf(node.classList, "box") >= 0;
+    return node !== null && indexOf(node.classList, "box") >= 0;
 }
 
 updateBg = function (ev) {
-    console.log(ev);
-    if (isBox(ev.toElement) && !isBox(ev.fromElement)) {
-        setContainerBg(true);
-    } else if (!isBox(ev.toElement) && isBox(ev.fromElement)) {
-        setContainerBg(false);
+    // If we're inside a box, set border
+    if (ev.target.querySelector("div.box") == null) {
+        setContainerBorder(true);
+    } else {
+        setContainerBorder(false);
     }
 };
 
 document.addEventListener("mouseover", updateBg);
-

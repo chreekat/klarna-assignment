@@ -66,15 +66,33 @@ div.box:nth-child(4n+4):last-child {
 }
 
 /* Put border on highlighted boxes/containers (interactively)*/
-div.container1.background {
+div.container1.border {
     border: 10px #404040 solid;
     padding: 0;
 }
-div.container2.background {
+div.container2.border {
     border: 15px #404040 solid;
     padding: 0;
 }
 div.box:hover {
     border: 5px #404040 solid;
     padding: 0;
+}
+
+/* Give boxes some interior shape */
+div.box-header {
+    border-bottom: 1px solid #404040;
+}
+div.box-neighbor-left, div.box-neighbor-right {
+    display: inline-block;
+}
+div.box-neighbor-right {
+    float: right;
+}
+/* ..and style */
+span.box-title {
+    font-weight: bold;
+}
+span.box-closer {
+    float: right;
 }
