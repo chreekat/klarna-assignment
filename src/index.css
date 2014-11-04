@@ -66,11 +66,11 @@ div.box:nth-child(4n+4):last-child {
 }
 
 /* Put border on highlighted boxes/containers (interactively)*/
-div.container1.hovered {
+div.container1.background {
     border: 10px #404040 solid;
     padding: 0;
 }
-div.container2.hovered {
+div.container2.background {
     border: 15px #404040 solid;
     padding: 0;
 }
