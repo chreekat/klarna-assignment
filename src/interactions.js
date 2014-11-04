@@ -5,7 +5,7 @@ map = function(listish, f) {
         acc.push(f(listish[i]));
     }
 };
-// no indexOf for classlists, either. :/
+// no indexOf for classLists, either. :/
 indexOf = function(listish, obj) {
     for (i = 0; i < listish.length; i++) {
         if (listish[i] === obj) {
@@ -79,6 +79,12 @@ app.controller("BoxList", function ($scope, webStorage) {
             return $scope.m.boxes[idx+1];
         }
         return "";
+    };
+    $scope.borderColor = function () {
+        // At one end, we have absolute black. Let's make that happen at 20
+        // boxes, so we can take steps of 6, starting at 135
+        val = Math.max(0, 135 - 6* $scope.m.boxes.length);
+        return "rgb("+ val + "," + val + "," + val + ")"
     };
     sync = function () {
         webStorage.add("model", $scope.m);

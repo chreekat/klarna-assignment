@@ -9,6 +9,11 @@
     <script src="interactions.js"></script>
 </head>
 <body ng-app="boxes" ng-controller="BoxList">
+<style>/* inline style, modified by Angular */
+div.container2.border {
+    border: 15px {{borderColor()}} solid;
+}
+</style>
 <div class="util">
     Boxes visible: {{m.boxes.length}} | Boxes closed: {{m.closedCount}} |
     <span ng-click="reset()" class="action">Reset!</span>
