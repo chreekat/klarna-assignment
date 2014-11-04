@@ -5,12 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="index.css">
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-webstorage/angular-webstorage.min.js"></script>
     <script src="interactions.js"></script>
 </head>
 <body ng-app="boxes">
 <div class="container1" ng-controller="BoxList">
     <div class="container2">
-        <div class="box" ng-repeat="box in boxes" ng-click="addBox(box)">
+        <div class="box" ng-repeat="box in m.boxes" ng-click="addBox(box)">
             <!-- boxes added dynamically -->
             <div class='box-header'>
                 <span class='box-title'>

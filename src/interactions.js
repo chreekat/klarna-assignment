@@ -37,28 +37,43 @@ updateBg = function (ev) {
 
 document.addEventListener("mouseover", updateBg);
 
-app = angular.module("boxes", []);
-app.controller("BoxList", function ($scope) {
-    $scope.boxes = [1];
-    $scope.maxId = 1;
+app = angular.module("boxes", ["webStorageModule"]);
+app.controller("BoxList", function ($scope, webStorage) {
+    $scope.m = (function () {
+        fromStorage = webStorage.get("model");
+        if (fromStorage !== null) {
+            return fromStorage;
+        } else {
+            return {
+                boxes: [1],
+                maxId: 1
+            };
+        }
+    }());
     $scope.deleteBox = function(targetId) {
-        targetIdx = $scope.boxes.indexOf(targetId);
-        $scope.boxes.splice(targetIdx, 1);
+        targetIdx = $scope.m.boxes.indexOf(targetId);
+        $scope.m.boxes.splice(targetIdx, 1);
+        sync();
     };
     $scope.addBox = function(targetId) {
-        targetIdx = $scope.boxes.indexOf(targetId);
-        $scope.boxes.splice(targetIdx+1, 0, ++$scope.maxId);
+        targetIdx = $scope.m.boxes.indexOf(targetId);
+        $scope.m.boxes.splice(targetIdx+1, 0, ++$scope.m.maxId);
+        sync();
     };
     $scope.leftId = function (idx) {
         if ([1,2,4].indexOf(idx % 6) >= 0) {
-            return $scope.boxes[idx-1];
+            return $scope.m.boxes[idx-1];
         }
         return "";
     };
     $scope.rightId = function (idx, atEnd) {
         if (!atEnd && [0,1,3].indexOf(idx % 6) >= 0) {
-            return $scope.boxes[idx+1];
+            return $scope.m.boxes[idx+1];
         }
         return "";
     };
+    sync = function () {
+        webStorage.add("model", $scope.m);
+    };
+
 });
