@@ -37,7 +37,28 @@ updateBg = function (ev) {
 
 document.addEventListener("mouseover", updateBg);
 
-container = document.querySelector("div.container2");
-htmlBoxList([1,2,3,4,5,6,7]).map(function (el) {
-    container.appendChild(el);
+app = angular.module("boxes", []);
+app.controller("BoxList", function ($scope) {
+    $scope.boxes = [1];
+    $scope.maxId = 1;
+    $scope.deleteBox = function(targetId) {
+        targetIdx = $scope.boxes.indexOf(targetId);
+        $scope.boxes.splice(targetIdx, 1);
+    };
+    $scope.addBox = function(targetId) {
+        targetIdx = $scope.boxes.indexOf(targetId);
+        $scope.boxes.splice(targetIdx+1, 0, ++$scope.maxId);
+    };
+    $scope.leftId = function (idx) {
+        if ([1,2,4].indexOf(idx % 6) >= 0) {
+            return $scope.boxes[idx-1];
+        }
+        return "";
+    };
+    $scope.rightId = function (idx, atEnd) {
+        if (!atEnd && [0,1,3].indexOf(idx % 6) >= 0) {
+            return $scope.boxes[idx+1];
+        }
+        return "";
+    };
 });

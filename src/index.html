@@ -8,21 +8,23 @@
     <script src="interactions.js"></script>
 </head>
 <body ng-app="boxes">
-<div class="container1">
-    <div class="container2" ng-repeat="box in boxlist">
-        <!-- boxes added dynamically -->
-        <div class='box-header'>"
-            <span class='box-title'>"
-                [{{box.id}}]
-            </span>
-            <span class='box-closer' ng-click="deleteBox(box.id)">x</span>
-         </div>
-         <div class='box-content'>
-             <div class='box-neighbor-left'>
-                 {{leftId($index)}}
+<div class="container1" ng-controller="BoxList">
+    <div class="container2">
+        <div class="box" ng-repeat="box in boxes" ng-click="addBox(box)">
+            <!-- boxes added dynamically -->
+            <div class='box-header'>
+                <span class='box-title'>
+                    [{{box}}]
+                </span>
+                <span class='box-closer' ng-click="deleteBox(box)">x</span>
              </div>
-             <div class='box-neighbor-right'>
-                 {{rightId($index)}}
+             <div class='box-content'>
+                 <div class='box-neighbor-left'>
+                     {{leftId($index)}}
+                 </div>
+                 <div class='box-neighbor-right'>
+                     {{rightId($index, $last)}}
+                </div>
             </div>
         </div>
     </div>
