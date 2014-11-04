@@ -8,8 +8,12 @@
     <script src="bower_components/angular-webstorage/angular-webstorage.min.js"></script>
     <script src="interactions.js"></script>
 </head>
-<body ng-app="boxes">
-<div class="container1" ng-controller="BoxList">
+<body ng-app="boxes" ng-controller="BoxList">
+<div class="util">
+    Boxes visible: {{m.boxes.length}} | Boxes closed: {{m.closedCount}} |
+    <span ng-click="reset()" class="action">Reset!</span>
+</div>
+<div class="container1">
     <div class="container2">
         <div class="box" ng-repeat="box in m.boxes" ng-click="addBox(box)">
             <!-- boxes added dynamically -->
@@ -17,7 +21,7 @@
                 <span class='box-title'>
                     [{{box}}]
                 </span>
-                <span class='box-closer' ng-click="deleteBox(box)">x</span>
+                <span class='box-closer action' ng-click="deleteBox(box)">x</span>
              </div>
              <div class='box-content'>
                  <div class='box-neighbor-left'>

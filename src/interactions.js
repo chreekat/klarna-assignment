@@ -46,13 +46,21 @@ app.controller("BoxList", function ($scope, webStorage) {
         } else {
             return {
                 boxes: [1],
-                maxId: 1
+                maxId: 1,
+                closedCount: 0
             };
         }
     }());
+    $scope.reset = function () {
+        $scope.m.boxes = [1];
+        $scope.m.maxId = 1;
+        $scope.m.closedCount = 0;
+        sync();
+    };
     $scope.deleteBox = function(targetId) {
         targetIdx = $scope.m.boxes.indexOf(targetId);
         $scope.m.boxes.splice(targetIdx, 1);
+        $scope.m.closedCount++;
         sync();
     };
     $scope.addBox = function(targetId) {
