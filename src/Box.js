@@ -32,6 +32,14 @@ Box.prototype.delete = function () {
     }
 };
 
+Box.prototype.toList = function () {
+    ids = []
+    for (cur = this; cur !== null; cur = cur.next) {
+        ids.push(cur.id);
+    }
+    return ids;
+};
+
 Box.prototype.toHtml = function (showLeft, showRight) {
     nextid = previd = "";
     if (showLeft && this.prev !== null) {
