@@ -26,9 +26,19 @@ describe("Box", function () {
         });
     });
 
-    describe("fromList", function () {
-        it("makes a linked list");
-        it("...with back links");
+    describe("Box.fromList", function () {
+        ids = [1,2,3];
+        it("makes a linked list", function () {
+            head = Box.fromList(ids);
+            expect(head.id).toBe(1);
+            expect(head.next.id).toBe(2);
+            expect(head.next.next.id).toBe(3);
+        });
+        it("...with back links", function () {
+            head = Box.fromList(ids);
+            expect(head.next.prev.id).toBe(1);
+            expect(head.next.next.prev.id).toBe(2);
+        });
     });
 
 })

@@ -36,3 +36,9 @@ updateBg = function (ev) {
 };
 
 document.addEventListener("mouseover", updateBg);
+
+container = document.querySelector("div.container2");
+head = Box.fromList([1,2,3,4,5,6,7]);
+for (cur = head; cur !== null; cur = cur.next) {
+    container.appendChild(cur.toHtml());
+}
