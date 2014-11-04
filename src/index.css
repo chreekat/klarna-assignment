@@ -1,0 +1,5 @@
+/* for smaller than 960px: */
+.container1 {
+    background-size: 100%;
+    background-image: url("img/falling-up.jpg");
+}
