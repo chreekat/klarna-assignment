@@ -1,70 +1,36 @@
-Box = function (id) {
-    this.id = id;
-    this.prev = this.next = null;
-};
-
-Box.fromList = function (ids) {
-    head = new Box(ids[0]);
-    cur = head;
-    for(i = 1; i < ids.length; i++) {
-        cur.next = new Box(ids[i]);
-        cur.next.prev = cur;
-        cur = cur.next;
-    }
-    return head;
-}
-
-Box.prototype.insertAfter = function (newBox) {
-    if (this.next !== null) {
-        this.next.prev = newBox;
-        newBox.next = this.next;
-    }
-    this.next = newBox;
-    newBox.prev = this;
-};
-
-Box.prototype.delete = function () {
-    if (this.prev !== null) {
-        this.prev.next = this.next;
-    }
-    if (this.next !== null) {
-        this.next.prev = this.prev;
-    }
-};
-
-Box.prototype.toList = function () {
-    ids = []
-    for (cur = this; cur !== null; cur = cur.next) {
-        ids.push(cur.id);
-    }
-    return ids;
-};
-
-Box.prototype.toHtml = function (showLeft, showRight) {
-    nextid = previd = "";
-    if (showLeft && this.prev !== null) {
-        previd = prev.id;
-    }
-    if (showRight && this.next !== null) {
-        nextid = next.id;
-    }
+htmlBox = function (id, left, right) {
     n = document.createElement("div");
     n.classList.add("box");
     n.innerHTML
         = "<div class='box-header'>"
         +       "<span class='box-title'>"
-        +             "[" + this.id + "]"
+        +             "[" + id + "]"
         +       "</span>"
         +       "<span class='box-closer'>x</span>"
         +   "</div>"
         +   "<div class='box-content'>"
         +       "<div class='box-neighbor-left'>"
-        +           previd
+        +           left
         +       "</div>"
         +       "<div class='box-neighbor-right'>"
-        +           nextid
+        +           right
         +       "</div>"
         +   "</div>"
         ;
     return n;
 };
+
+htmlBoxList = function (list) {
+    els = [];
+    for (i = 0; i < list.length; i++) {
+        left = right = "";
+        if ([1,2,4].indexOf(i%6) >= 0) {
+            left = list[i-1];
+        }
+        if ((i+1 !== list.length) && ([0,1,3].indexOf(i%6) >= 0)) {
+            right = list[i+1];
+        }
+        els.push(htmlBox(list[i], left, right));
+    }
+    return els;
+}
