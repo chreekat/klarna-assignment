@@ -17,11 +17,12 @@ div.container2 {
 <div class="util">
     Boxes visible: {{m.boxes.length}} | Boxes closed: {{m.closedCount}} |
     <span ng-click="reset()" class="action">Reset!</span>
-    <span class="notice">{{message}}</span>
+    <span class="notice">{{e.message}}</span>
 </div>
-<div class="container1">
-    <div class="container2">
-        <div class="box" ng-repeat="box in m.boxes" ng-click="addBox(box)">
+<div class="container1" ng-class="{border: e.borders}">
+    <div class="container2" ng-class="{border: e.borders}">
+        <div class="box" ng-repeat="box in m.boxes" ng-click="addBox(box)"
+                ng-mouseenter="e.borders = true" ng-mouseleave="e.borders = false">
             <!-- boxes added dynamically -->
             <div class='box-header'>
                 <span class='box-title'>

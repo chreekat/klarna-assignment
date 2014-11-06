@@ -1,42 +1,3 @@
-// No map for NodeLists. :(
-map = function(listish, f) {
-    acc = [];
-    for (i = 0; i < listish.length; i++) {
-        acc.push(f(listish[i]));
-    }
-};
-// no indexOf for classLists, either. :/
-indexOf = function(listish, obj) {
-    for (i = 0; i < listish.length; i++) {
-        if (listish[i] === obj) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-setContainerBorder = function (doSet) {
-    map(
-        document.querySelectorAll("div.container1, div.container2"),
-        function (cont) { cont.classList.toggle("border", doSet); }
-    );
-};
-
-isBox = function (node) {
-    return node !== null && indexOf(node.classList, "box") >= 0;
-}
-
-updateBg = function (ev) {
-    // If we're inside a box, set border
-    if (ev.target.querySelector("div.box") == null) {
-        setContainerBorder(true);
-    } else {
-        setContainerBorder(false);
-    }
-};
-
-document.addEventListener("mouseover", updateBg);
-
 app = angular.module("boxes", ["webStorageModule"]);
 app.controller("BoxList", function ($scope, webStorage, $timeout) {
     defaults =  function () {
@@ -50,9 +11,9 @@ app.controller("BoxList", function ($scope, webStorage, $timeout) {
     showMsg = (function () {
         promise = null;
         return function ActualFunction(msg) {
-            $scope.message = "| " + msg;
+            $scope.e.message = "| " + msg;
             $timeout.cancel(promise);
-            promise = $timeout(function () { $scope.message = ""; }, 3000);
+            promise = $timeout(function () { $scope.e.message = ""; }, 3000);
         };
     }());
 
@@ -64,10 +25,15 @@ app.controller("BoxList", function ($scope, webStorage, $timeout) {
             return defaults() ;
         }
     }());
+    // ephemeral
+    $scope.e = {
+        borders: false,
+        message: ""
+    };
 
     $scope.reset = function () {
         $scope.m = defaults();
-        $scope.message = "";
+        $scope.e.message = "";
         sync();
     };
     $scope.closeBox = function(targetId, $event) {
