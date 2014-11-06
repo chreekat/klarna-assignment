@@ -1,13 +1,18 @@
 app = angular.module("boxes", ["webStorageModule"]);
 app.controller("BoxList", function ($scope, webStorage, $timeout) {
-    defaults =  function () {
+
+    // UTIL FUNCS
+
+    sync = function () {
+        webStorage.add("model", $scope.m);
+    };
+    modelDefaults =  function () {
         return {
             boxes: [1],
             maxId: 1,
             closedCount: 0,
         };
     };
-
     showMsg = (function () {
         promise = null;
         return function ActualFunction(msg) {
@@ -17,22 +22,27 @@ app.controller("BoxList", function ($scope, webStorage, $timeout) {
         };
     }());
 
+    // SCOPE INITIALIZATION
+
+    // m = model (synced to storage)
     $scope.m = (function () {
         fromStorage = webStorage.get("model");
         if (fromStorage !== null) {
             return fromStorage;
         } else {
-            return defaults() ;
+            return modelDefaults() ;
         }
     }());
-    // ephemeral
+    // e = ephemeral (non-stored) data
     $scope.e = {
         borders: false,
         message: ""
     };
 
+    // CONTROLLER ACTIONS
+
     $scope.reset = function () {
-        $scope.m = defaults();
+        $scope.m = modelDefaults();
         $scope.e.message = "";
         sync();
     };
@@ -59,17 +69,23 @@ app.controller("BoxList", function ($scope, webStorage, $timeout) {
         $scope.m.boxes.splice(targetIdx+1, 0, ++$scope.m.maxId);
         sync();
     };
+
+    // REACTIVE VALUES
+    // (which are too complex to fit in templates in the html)
+
     $scope.leftId = function (idx) {
+        lid = "";
         if ([1,2,4].indexOf(idx % 6) >= 0) {
-            return $scope.m.boxes[idx-1];
+            lid = $scope.m.boxes[idx-1];
         }
-        return "";
+        return lid;
     };
     $scope.rightId = function (idx, atEnd) {
+        rid = "";
         if (!atEnd && [0,1,3].indexOf(idx % 6) >= 0) {
-            return $scope.m.boxes[idx+1];
+            rid = $scope.m.boxes[idx+1];
         }
-        return "";
+        return rid;
     };
     $scope.bgColor = function () {
         // At one end, we have absolute black. Let's make that happen at 20
@@ -77,8 +93,4 @@ app.controller("BoxList", function ($scope, webStorage, $timeout) {
         val = Math.max(0, 135 - 6* $scope.m.boxes.length);
         return "rgb("+ val + "," + val + "," + val + ")"
     };
-    sync = function () {
-        webStorage.add("model", $scope.m);
-    };
-
 });

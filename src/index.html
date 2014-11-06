@@ -9,11 +9,13 @@
     <script src="interactions.js"></script>
 </head>
 <body ng-app="boxes" ng-controller="BoxList">
-<style>/* inline style, modified by Angular */
+
+<style>/* inlined so Angular can gets its grubby paws on it */
 div.container2 {
     background: {{bgColor()}};
 }
 </style>
+
 <div class="util">
     Boxes visible: {{m.boxes.length}} | Boxes closed: {{m.closedCount}} |
     <span ng-click="reset()" class="action">Reset!</span>
@@ -23,7 +25,6 @@ div.container2 {
     <div class="container2" ng-class="{border: e.borders}">
         <div class="box" ng-repeat="box in m.boxes" ng-click="addBox(box)"
                 ng-mouseenter="e.borders = true" ng-mouseleave="e.borders = false">
-            <!-- boxes added dynamically -->
             <div class='box-header'>
                 <span class='box-title'>
                     [{{box}}]
