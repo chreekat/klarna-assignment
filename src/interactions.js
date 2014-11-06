@@ -39,11 +39,14 @@ document.addEventListener("mouseover", updateBg);
 
 app = angular.module("boxes", ["webStorageModule"]);
 app.controller("BoxList", function ($scope, webStorage, $timeout) {
-    defaults =  {
-        boxes: [1],
-        maxId: 1,
-        closedCount: 0,
+    defaults =  function () {
+        return {
+            boxes: [1],
+            maxId: 1,
+            closedCount: 0,
+        };
     };
+
     showMsg = (function () {
         promise = null;
         return function ActualFunction(msg) {
@@ -58,12 +61,12 @@ app.controller("BoxList", function ($scope, webStorage, $timeout) {
         if (fromStorage !== null) {
             return fromStorage;
         } else {
-            return defaults ;
+            return defaults() ;
         }
     }());
 
     $scope.reset = function () {
-        $scope.m = defaults;
+        $scope.m = defaults();
         $scope.message = "";
         sync();
     };
