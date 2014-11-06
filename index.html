@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <title>Johnson's Layout</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="index.css">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-webstorage/angular-webstorage.min.js"></script>
+    <script src="interactions.js"></script>
+</head>
+<body ng-app="boxes" ng-controller="BoxList">
+
+<style>/* inlined so Angular can gets its grubby paws on it */
+div.container2 {
+    background: {{bgColor()}};
+}
+</style>
+
+<div class="util">
+    Boxes visible: {{m.boxes.length}} | Boxes closed: {{m.closedCount}} |
+    <span ng-click="reset()" class="action">Reset!</span>
+    <span class="notice">{{e.message}}</span>
+</div>
+<div class="container1" ng-class="{border: e.borders}">
+    <div class="container2" ng-class="{border: e.borders}">
+        <div class="box" ng-repeat="box in m.boxes" ng-click="addBox(box)"
+                ng-mouseenter="e.borders = true" ng-mouseleave="e.borders = false">
+            <div class='box-header'>
+                <span class='box-title'>
+                    [{{box}}]
+                </span>
+                <span class='box-closer action' ng-click="closeBox(box, $event)">x</span>
+             </div>
+             <div class='box-content'>
+                 <div class='box-neighbor-left'>
+                     {{leftId($index)}}
+                 </div>
+                 <div class='box-neighbor-right'>
+                     {{rightId($index, $last)}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
