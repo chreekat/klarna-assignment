@@ -17,6 +17,7 @@ div.container2 {
 <div class="util">
     Boxes visible: {{m.boxes.length}} | Boxes closed: {{m.closedCount}} |
     <span ng-click="reset()" class="action">Reset!</span>
+    <span class="notice">{{message}}</span>
 </div>
 <div class="container1">
     <div class="container2">
@@ -26,7 +27,7 @@ div.container2 {
                 <span class='box-title'>
                     [{{box}}]
                 </span>
-                <span class='box-closer action' ng-click="deleteBox(box)">x</span>
+                <span class='box-closer action' ng-click="deleteBox(box, $event)">x</span>
              </div>
              <div class='box-content'>
                  <div class='box-neighbor-left'>

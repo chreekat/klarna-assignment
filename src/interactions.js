@@ -38,30 +38,52 @@ updateBg = function (ev) {
 document.addEventListener("mouseover", updateBg);
 
 app = angular.module("boxes", ["webStorageModule"]);
-app.controller("BoxList", function ($scope, webStorage) {
+app.controller("BoxList", function ($scope, webStorage, $timeout) {
+    defaults =  {
+        boxes: [1],
+        maxId: 1,
+        closedCount: 0,
+    };
+    showMsg = (function () {
+        promise = null;
+        return function ActualFunction(msg) {
+            $scope.message = "| " + msg;
+            $timeout.cancel(promise);
+            promise = $timeout(function () { $scope.message = ""; }, 3000);
+        };
+    }());
+
     $scope.m = (function () {
         fromStorage = webStorage.get("model");
         if (fromStorage !== null) {
             return fromStorage;
         } else {
-            return {
-                boxes: [1],
-                maxId: 1,
-                closedCount: 0
-            };
+            return defaults ;
         }
     }());
+
     $scope.reset = function () {
-        $scope.m.boxes = [1];
-        $scope.m.maxId = 1;
-        $scope.m.closedCount = 0;
+        $scope.m = defaults;
+        $scope.closeMessage = "";
         sync();
     };
-    $scope.deleteBox = function(targetId) {
-        targetIdx = $scope.m.boxes.indexOf(targetId);
-        $scope.m.boxes.splice(targetIdx, 1);
-        $scope.m.closedCount++;
-        sync();
+    $scope.deleteBox = function(targetId, $event) {
+        if ($scope.m.boxes.length == 1) {
+            //showMsg("Can't close last box!");
+            // I thought I once read that angular prevents propagation by
+            // default, and indeed addBox usually doesn't fire when the
+            // delete button is pressed. But when closing the last box, the
+            // event *does* propagate, and addBox *does* fire!
+            // See http://plnkr.co/edit/9xpYpxFvyXhvquZkTc9X?p=preview for
+            // a test case.
+            $event.stopPropagation();
+        } else {
+            targetIdx = $scope.m.boxes.indexOf(targetId);
+            $scope.m.boxes.splice(targetIdx, 1);
+            $scope.m.closedCount++;
+            sync();
+            showMsg("You just closed box " + targetId);
+        }
     };
     $scope.addBox = function(targetId) {
         targetIdx = $scope.m.boxes.indexOf(targetId);
