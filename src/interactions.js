@@ -64,15 +64,15 @@ app.controller("BoxList", function ($scope, webStorage, $timeout) {
 
     $scope.reset = function () {
         $scope.m = defaults;
-        $scope.closeMessage = "";
+        $scope.message = "";
         sync();
     };
-    $scope.deleteBox = function(targetId, $event) {
+    $scope.closeBox = function(targetId, $event) {
         if ($scope.m.boxes.length == 1) {
-            //showMsg("Can't close last box!");
+            showMsg("Can't close last box!");
             // I thought I once read that angular prevents propagation by
             // default, and indeed addBox usually doesn't fire when the
-            // delete button is pressed. But when closing the last box, the
+            // close button is pressed. But when closing the last box, the
             // event *does* propagate, and addBox *does* fire!
             // See http://plnkr.co/edit/9xpYpxFvyXhvquZkTc9X?p=preview for
             // a test case.
